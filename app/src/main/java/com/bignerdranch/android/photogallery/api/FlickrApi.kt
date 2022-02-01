@@ -8,8 +8,12 @@ import retrofit2.http.GET
 
 interface FlickrApi {
 
-    // Todo - When I come back, i will go through "DEFINING AN API INTERFACE" again to understand it better.
 
-    @GET("/")
-    fun fetchContents() : Call<String>
+    @GET("services/rest/?method=flickr.interestingness.getList" +
+            "&api_key=332320506da66824c64330ccee5a9310" +
+            "&format=json" +
+            "&nojsoncallback=1" +
+            "&extras=url_s"
+    )
+    fun fetchPhotos(): Call<String>
 }

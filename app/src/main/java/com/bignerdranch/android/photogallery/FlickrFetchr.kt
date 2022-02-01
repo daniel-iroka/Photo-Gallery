@@ -1,5 +1,7 @@
 package com.bignerdranch.android.photogallery
 
+// This is our Repository file which we will use to store and access data
+
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +20,7 @@ class FlickrFetchr  {
 
     init {
         val retrofit : Retrofit = Retrofit.Builder()
-            .baseUrl("https://www.flickr.com/")
+            .baseUrl("https://api.flickr.com/")  // the baseUrl is our request endpoint
             .addConverterFactory(ScalarsConverterFactory.create()) // this expects a converter factory which creates an instance of scalarConverters that will be used by retrofit
             .build()
 
@@ -26,9 +28,9 @@ class FlickrFetchr  {
     }
 
 
-    fun fetchContents(): LiveData<String> {
+    fun fetchPhotos(): LiveData<String> {
         val responseLiveData: MutableLiveData<String> = MutableLiveData()
-        val flickrRequest: Call<String> = flickrApi.fetchContents()
+        val flickrRequest: Call<String> = flickrApi.fetchPhotos()
 
         flickrRequest.enqueue(object: Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
