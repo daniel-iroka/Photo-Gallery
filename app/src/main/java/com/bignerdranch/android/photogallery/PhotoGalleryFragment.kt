@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "PhotoGalleryFragment"
 
+// todo: When I come back,I Will go to "Networking Across Configuration Changes"
+
 class PhotoGalleryFragment : Fragment() {
 
     private lateinit var photoRecyclerView: RecyclerView
