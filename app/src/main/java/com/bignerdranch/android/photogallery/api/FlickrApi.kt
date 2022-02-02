@@ -3,7 +3,7 @@ package com.bignerdranch.android.photogallery.api
 import retrofit2.Call
 import retrofit2.http.GET
 
-// THIS FILE is our API-specific code interface that wil hold annotated objects that will Implemented my Retrofit
+// THIS FILE is our API-specific code interface that wil hold annotated objects that will be Implemented my Retrofit
 // It will basically handle the Web Requests
 
 interface FlickrApi {
@@ -15,5 +15,5 @@ interface FlickrApi {
             "&nojsoncallback=1" +
             "&extras=url_s"
     )
-    fun fetchPhotos(): Call<String>
+    fun fetchPhotos(): Call<FlickrResponse>
 }
