@@ -23,7 +23,7 @@ class FlickrFetchr  {
     init {
         val retrofit : Retrofit = Retrofit.Builder()
             .baseUrl("https://api.flickr.com/")  // the baseUrl is our request endpoint
-            .addConverterFactory(GsonConverterFactory.create()) // this expects a converter factory which creates an instance of scalarConverters that will be used by retrofit
+            .addConverterFactory(GsonConverterFactory.create()) // this expects a converter factory which creates an instance of (Gson or)scalarConverters that will be used by retrofit
             .build()
 
         flickrApi = retrofit.create(FlickrApi::class.java)
