@@ -1,6 +1,6 @@
 package com.bignerdranch.android.photogallery
 
-// This is our Repository file which we will use to store and access data
+// This is our Repository file which we will use to store and access data(photos)
 
 import android.util.Log
 import androidx.lifecycle.LiveData
