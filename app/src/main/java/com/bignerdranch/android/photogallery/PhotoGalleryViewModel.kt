@@ -7,6 +7,14 @@ import androidx.lifecycle.ViewModel
 
 class PhotoGalleryViewModel: ViewModel() {
 
+    private val cancelRequestRepositoryClass = CancelRequestRepositoryClass()
+
+    // This function is called when a ViewModel is about to be destroyed
+    override fun onCleared() {
+        super.onCleared()
+        cancelRequestRepositoryClass.cancelRequestInFlight()
+    }
+
     val galleryItemLiveData: LiveData<List<GalleryItem>>
 
             init {
