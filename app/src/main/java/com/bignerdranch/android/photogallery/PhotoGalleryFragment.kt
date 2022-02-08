@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 private const val TAG = "PhotoGalleryFragment"
 
 
+
 class PhotoGalleryFragment : Fragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel

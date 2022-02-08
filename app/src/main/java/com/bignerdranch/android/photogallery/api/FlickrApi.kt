@@ -1,5 +1,6 @@
 package com.bignerdranch.android.photogallery.api
 
+import com.bignerdranch.android.photogallery.PhotoDeserializer
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -15,5 +16,5 @@ interface FlickrApi {
             "&nojsoncallback=1" +
             "&extras=url_s"
     )
-    fun fetchPhotos(): Call<FlickrResponse>
+    fun fetchPhotos(): Call<PhotoDeserializer>
 }
