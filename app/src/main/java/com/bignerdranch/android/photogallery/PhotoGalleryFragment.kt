@@ -16,18 +16,22 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "PhotoGalleryFragment"
 
-
-
 class PhotoGalleryFragment : Fragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
     private lateinit var photoRecyclerView: RecyclerView
+    private lateinit var thumbnailDownloader: ThumbnailDownloader<PhotoHolder>  // Our ThumbnailDownloader() class Instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        retainInstance = true // In simple terms, this is like forcefully retaining the fragment instance
+
         photoGalleryViewModel =     // An instance of our viewModel class
             ViewModelProvider(this).get(PhotoGalleryViewModel::class.java)
+
+        thumbnailDownloader = ThumbnailDownloader()
+        lifecycle.addObserver(thumbnailDownloader)
     }
 
     override fun onCreateView(
@@ -44,7 +48,7 @@ class PhotoGalleryFragment : Fragment() {
     }
 
     // OUR PHOTO VIEW HOLDER AND ADAPTER
-    // TODO - WHEN I COME BACK, I WILL GO TO "PREPARING TO DOWNLOAD BYTES FROM A URL."
+    // TODO - When I come back, I revise "PREPARING TO DOWNLOAD BYTES FROM A URL" and move to Starting and stopping a Handler thread.
 
     private class PhotoHolder(itemImageView: ImageView)
         : RecyclerView.ViewHolder(itemImageView) {
@@ -85,6 +89,13 @@ class PhotoGalleryFragment : Fragment() {
             Observer { galleryItems ->
                 photoRecyclerView.adapter = PhotoAdapter(galleryItems)
             }
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycle.removeObserver(
+            thumbnailDownloader
         )
     }
 

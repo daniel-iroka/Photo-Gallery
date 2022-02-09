@@ -2,12 +2,16 @@ package com.bignerdranch.android.photogallery
 
 // This is our Repository file which we will use to store and access data(photos)
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bignerdranch.android.photogallery.api.FlickrApi
 import com.bignerdranch.android.photogallery.api.PhotoResponse
 import com.google.gson.GsonBuilder
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,5 +67,13 @@ class FlickrFetchr  {
             }
         })
         return responseLiveData
+    }
+
+    @WorkerThread
+    fun fetchPhotoUrl(url: String): Bitmap? {
+        val response: Response<ResponseBody> = flickrApi.fetchUrlBytes(url).execute()
+        val bitmap = response.body()?.byteStream()?.use(BitmapFactory::decodeStream)
+        Log.i(TAG, "Decode bitmap=$bitmap from Response=$response")
+        return bitmap
     }
 }
