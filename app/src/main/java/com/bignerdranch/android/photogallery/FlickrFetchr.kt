@@ -69,6 +69,7 @@ class FlickrFetchr  {
         return responseLiveData
     }
 
+    // This function here fetches the bytes from the URL and decodes them into a bitmap
     @WorkerThread
     fun fetchPhotoUrl(url: String): Bitmap? {
         val response: Response<ResponseBody> = flickrApi.fetchUrlBytes(url).execute()
@@ -77,3 +78,4 @@ class FlickrFetchr  {
         return bitmap
     }
 }
+

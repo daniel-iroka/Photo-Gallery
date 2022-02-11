@@ -20,7 +20,7 @@ class PhotoGalleryFragment : Fragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
     private lateinit var photoRecyclerView: RecyclerView
-    private lateinit var thumbnailDownloader: ThumbnailDownloader<PhotoHolder>  // Our ThumbnailDownloader() class Instance
+    private lateinit var thumbnailDownloader: ThumbnailDownloader<PhotoHolder>  // Our ThumbnailDownloader() Instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,6 @@ class PhotoGalleryFragment : Fragment() {
     }
 
     // OUR PHOTO VIEW HOLDER AND ADAPTER
-    // TODO - When I come back, I revise "PREPARING TO DOWNLOAD BYTES FROM A URL" and move to Starting and stopping a Handler thread.
 
     private class PhotoHolder(itemImageView: ImageView)
         : RecyclerView.ViewHolder(itemImageView) {
@@ -76,6 +75,8 @@ class PhotoGalleryFragment : Fragment() {
                 R.drawable.bill_up_close
             ) ?: ColorDrawable()
             holder.bindDrawable(placeHolder)
+
+            thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
         }
 
     }
@@ -92,6 +93,8 @@ class PhotoGalleryFragment : Fragment() {
         )
     }
 
+
+    // This will remove thumbnailDownloader as a lifecycle observer when onDestroy is called.
     override fun onDestroy() {
         super.onDestroy()
         lifecycle.removeObserver(
