@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
 // THE SOLE PURPOSE OF THIS FILE IS TO DOWNLOAD AND SERVE IMAGES TO "PhotoGalleryFragment" in a background thread
+// TODO - When I come back, I Will start revising from "Starting and stopping a HandlerThread", go to Messages and Message Handlers and beyond.
 
 private const val TAG = "ThumbnailDownloader"
 
