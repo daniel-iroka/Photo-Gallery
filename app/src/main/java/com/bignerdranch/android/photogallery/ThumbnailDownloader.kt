@@ -11,7 +11,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import java.util.concurrent.ConcurrentHashMap
 
 // THE SOLE PURPOSE OF THIS FILE IS TO DOWNLOAD AND SERVE IMAGES TO "PhotoGalleryFragment" in a background thread
-// TODO - When I come back next time, I will start revising from USING HANDLERS and then go to PASSING HANDLERS and beyond.
+// TODO - When I come back next time, I will go to PASSING HANDLERS.
 
 private const val TAG = "ThumbnailDownloader"
 private const val MESSAGE_DOWNLOAD = 0    // This will be used to identify messages as download requests
