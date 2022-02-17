@@ -1,13 +1,13 @@
 package com.bignerdranch.android.photogallery
 
+import  android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -28,13 +28,24 @@ class PhotoGalleryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        retainInstance = true // In simple terms, this is like forcefully retaining the fragment instance
+        retainInstance = true // In simple terms, this is like forcefully retaining the fragment's instance
 
         photoGalleryViewModel =     // An instance of our viewModel class
             ViewModelProvider(this).get(PhotoGalleryViewModel::class.java)
 
-        thumbnailDownloader = ThumbnailDownloader()
-        lifecycle.addObserver(thumbnailDownloader)
+
+        // passes a handler attached to the Looper of the main(this) thread since it is put in onCreate()
+        // and handles the downloaded image updating it in the UI
+        val responseHandler = Handler()
+        thumbnailDownloader =
+            ThumbnailDownloader(responseHandler) { photoHolder, bitmap ->
+                val drawable = BitmapDrawable(resources, bitmap)
+                photoHolder.bindDrawable(drawable)
+            }
+
+        // thumbnailDownloader.fragmentLifeCycleObserver is the most recent refactored Implementation
+        // TODO - Remember to remove this comment later...
+        lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
     }
 
     override fun onCreateView(
@@ -42,10 +53,15 @@ class PhotoGalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // set the viewLifeCycleObserver of thumbnailDownloader to listen to the lifecycle of the fragment's view
+        viewLifecycleOwner.lifecycle.addObserver(
+            thumbnailDownloader.viewLifeCycleObserver
+        )
+
         val view = inflater.inflate(R.layout.fragment_photo_gallery, container, false)
 
         photoRecyclerView = view.findViewById(R.id.photo_recycler_view)
-        photoRecyclerView.layoutManager = GridLayoutManager(context, COLUMN_WIDTH)
+        photoRecyclerView.layoutManager = GridLayoutManager(context, 3)
 
         return view
     }
@@ -81,7 +97,6 @@ class PhotoGalleryFragment : Fragment() {
 
             thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
         }
-
     }
 
 
@@ -102,7 +117,7 @@ class PhotoGalleryFragment : Fragment() {
 
         // DANIEL'S(MY) METHOD
         // Getting to know the width of our recyclerView to dynamically adjust the number of columns
-        photoRecyclerView.apply{
+        /**photoRecyclerView.apply{
             viewTreeObserver.addOnGlobalLayoutListener(
                 object : ViewTreeObserver.OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
@@ -112,11 +127,11 @@ class PhotoGalleryFragment : Fragment() {
                     }
                 }
             )
-        }
+        } **/
 
         // NNAMDI'S METHOD
         // Getting to know the width of our recyclerView to dynamically adjust the number of columns
-        photoRecyclerView.layoutManager = GridLayoutManager(context, 3).also {
+        /**photoRecyclerView.layoutManager = GridLayoutManager(context, 3).also {
             it.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     Log.i(TAG, "The current width is $position.")
@@ -124,15 +139,21 @@ class PhotoGalleryFragment : Fragment() {
                     TODO("Look up Nnamdi's Implementation and check what spanSize is and why it changes anyhow.")
                 }
             }
-        }
+        } **/
     }
 
+    // This will remove thumbnailDownloader as a fragment's view lifecycle observer
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewLifecycleOwner.lifecycle.removeObserver(
+            thumbnailDownloader.viewLifeCycleObserver)
+    }
 
     // This will remove thumbnailDownloader as a lifecycle observer when onDestroy is called.
     override fun onDestroy() {
         super.onDestroy()
         lifecycle.removeObserver(
-            thumbnailDownloader
+            thumbnailDownloader.fragmentLifeCycleObserver
         )
     }
 
