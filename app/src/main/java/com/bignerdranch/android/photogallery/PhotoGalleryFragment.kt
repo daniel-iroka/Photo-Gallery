@@ -109,37 +109,6 @@ class PhotoGalleryFragment : Fragment() {
                 photoRecyclerView.adapter = PhotoAdapter(galleryItems)
             }
         )
-
-
-        // TODO - IN GENERAL, GO WITH NNAMDI'S METHOD BUT SEE IF MY METHOD STILL STAND'S A CHANCE.
-        // TODO - ALSO TRY TO USE 0dp ON BOTH METHODS TO SEE IF WHICH WILL WORK.
-        // TODO - IF EITHER OF BOTH DOESEN'T WORK, TRY THE QUALIFIED RESOURCE METHOD THE BOOK SUGGESTED AT FIRST.
-
-        // DANIEL'S(MY) METHOD
-        // Getting to know the width of our recyclerView to dynamically adjust the number of columns
-        /**photoRecyclerView.apply{
-            viewTreeObserver.addOnGlobalLayoutListener(
-                object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        COLUMN_WIDTH = width
-                        Log.i(TAG, "Current width is $COLUMN_WIDTH. Received width is $width")
-                        TODO("Check the logs for my method to see the width returned in my method")
-                    }
-                }
-            )
-        } **/
-
-        // NNAMDI'S METHOD
-        // Getting to know the width of our recyclerView to dynamically adjust the number of columns
-        /**photoRecyclerView.layoutManager = GridLayoutManager(context, 3).also {
-            it.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    Log.i(TAG, "The current width is $position.")
-                    return if (position % 3 == 0) 2 else 1
-                    TODO("Look up Nnamdi's Implementation and check what spanSize is and why it changes anyhow.")
-                }
-            }
-        } **/
     }
 
     // This will remove thumbnailDownloader as a fragment's view lifecycle observer
