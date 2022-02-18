@@ -5,9 +5,11 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,7 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "PhotoGalleryFragment"
-private var COLUMN_WIDTH = 1
+private var column = 1
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -43,8 +45,6 @@ class PhotoGalleryFragment : Fragment() {
                 photoHolder.bindDrawable(drawable)
             }
 
-        // thumbnailDownloader.fragmentLifeCycleObserver is the most recent refactored Implementation
-        // TODO - Remember to remove this comment later...
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
     }
 
@@ -53,9 +53,11 @@ class PhotoGalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // set the viewLifeCycleObserver of thumbnailDownloader to listen to the lifecycle of the fragment's view
-        viewLifecycleOwner.lifecycle.addObserver(
-            thumbnailDownloader.viewLifeCycleObserver
+        // Course Challenge. Observing the fragment's view lifeCycle with the viewLifeCycleOwnerLiveData
+        viewLifecycleOwnerLiveData.observe(
+            viewLifecycleOwner, Observer { photoFragment ->
+                photoFragment.lifecycle.addObserver(thumbnailDownloader.viewLifeCycleObserver)
+            }
         )
 
         val view = inflater.inflate(R.layout.fragment_photo_gallery, container, false)
@@ -94,6 +96,8 @@ class PhotoGalleryFragment : Fragment() {
                 R.drawable.bill_up_close
             ) ?: ColorDrawable()
             holder.bindDrawable(placeHolder)
+
+            // TODO - WHEN I AM FREE... WHICH IS NOW, I WILL ADD THE PICASSO DEPENDENCY TO MY PROJECT TO SOLVE THE IMAGE- LOADING PROBLEM
 
             thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
         }
