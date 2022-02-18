@@ -5,11 +5,9 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 private const val TAG = "PhotoGalleryFragment"
 private var column = 1
@@ -70,10 +69,18 @@ class PhotoGalleryFragment : Fragment() {
 
     // OUR PHOTO VIEW HOLDER AND ADAPTER
 
-    private class PhotoHolder(itemImageView: ImageView)
+    private class PhotoHolder(private val itemImageView: ImageView)
         : RecyclerView.ViewHolder(itemImageView) {
 
             val bindDrawable: (Drawable) -> Unit = itemImageView::setImageDrawable
+
+            // Use of picasso to download an image for us. Picasso comes with benefits like enhanced performance, caching and the rest.
+            fun bindGalleryItem(galleryItem : GalleryItem) {
+                Picasso.get()
+                    .load(galleryItem.url)
+                    .placeholder(R.drawable.bill_up_close)
+                    .into(itemImageView)
+            }
         }
 
     private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>)
@@ -97,7 +104,7 @@ class PhotoGalleryFragment : Fragment() {
             ) ?: ColorDrawable()
             holder.bindDrawable(placeHolder)
 
-            // TODO - WHEN I AM FREE... WHICH IS NOW, I WILL ADD THE PICASSO DEPENDENCY TO MY PROJECT TO SOLVE THE IMAGE- LOADING PROBLEM
+            holder.bindGalleryItem(galleryItem)
 
             thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
         }

@@ -53,4 +53,6 @@ dependencies {
     // alternatively - without Android dependencies for tests
     testImplementation "androidx.paging:paging-common-ktx:$paging_version"
 
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
