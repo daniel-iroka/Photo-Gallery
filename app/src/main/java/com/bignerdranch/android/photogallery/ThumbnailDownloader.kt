@@ -16,7 +16,7 @@ private const val MESSAGE_DOWNLOAD = 0    // will identify messages as download 
 
 class ThumbnailDownloader<in T>(
     private val responseHandler: Handler,
-    private val onThumbnailDownloaded: (T, Bitmap) -> Unit  // this will be called when an image has been downloaded and will be update the UI
+    private val onThumbnailDownloaded: (T, Bitmap) -> Unit
 )
     :HandlerThread(TAG) {
 
@@ -51,7 +51,6 @@ class ThumbnailDownloader<in T>(
     }
 
 
-
     // Course Challenge(LifeCycleObserver). Have thumbnailDownloader be automatically removed as lifecycleObserver when the fragment's lifecycle.ON_DESTROY is called.
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun clearQueue() {
@@ -60,17 +59,6 @@ class ThumbnailDownloader<in T>(
         requestMap.clear()
     }
 
-    // A new observer that will listen to the lifecycle callbacks of the fragment's view
-    /**val viewLifeCycleObserver: LifecycleObserver =
-        object: LifecycleObserver {
-
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            fun clearQueue() {
-                Log.i(TAG, "Clearing all the requests from the Queue")
-                requestHandler.removeMessages(MESSAGE_DOWNLOAD)
-                requestMap.clear()
-            }
-        } **/
 
     private var hasQuit = false
 
@@ -87,10 +75,10 @@ class ThumbnailDownloader<in T>(
     }
 
 
-    // Here we initialize requestHandler and define what it will do when downloaded messages are pulled off the queue and
-    // passed to it.
-    @Suppress("UNCHECKED_CAST") // This tells lint that we are well aware of casting "msg.obj as T" without first checking if msg.obj is of type T
-    @SuppressLint("HandlerLeak") // Added this because of a potential lint error(which occurs when the inner class's lifetime is longer than the outer class)
+    // We initialize requestHandler and define what it will do when downloaded messages are pulled off the queue and passed to it.
+
+    @Suppress("UNCHECKED_CAST") // 1 and 2. Go back to book for reference.
+    @SuppressLint("HandlerLeak")
     override fun onLooperPrepared() {
         requestHandler = object: Handler() {
             override fun handleMessage(msg: Message) {
@@ -129,6 +117,8 @@ class ThumbnailDownloader<in T>(
             requestMap.remove(target)     // we remove the photoHolder-URL mapping from the requestMap and set the bitmap on the target PhotoHolder
             onThumbnailDownloaded(target, bitmap)
         })
+
+        PhotoGalleryCache.instance.saveBitmapToCache("bitmap1", bitmap)
     }
 
 }

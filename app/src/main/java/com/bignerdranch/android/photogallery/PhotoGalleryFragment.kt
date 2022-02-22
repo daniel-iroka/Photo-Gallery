@@ -21,6 +21,7 @@ private const val TAG = "PhotoGalleryFragment"
 private var column = 1
 
 class PhotoGalleryFragment : Fragment() {
+    // TODO - WHEN NEXT I COME BACK, I WILL GO TO THE NEXT AND THIRD CHALLENGE.
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
     private lateinit var photoRecyclerView: RecyclerView
