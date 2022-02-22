@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 // THE SOLE PURPOSE OF THIS FILE IS TO DOWNLOAD AND SERVE IMAGES TO "PhotoGalleryFragment" in a background thread
 
 private const val TAG = "ThumbnailDownloader"
-private const val MESSAGE_DOWNLOAD = 0    // will identify messages as download requests
+private const val MESSAGE_DOWNLOAD = 0    // Download object
 
 class ThumbnailDownloader<in T>(
     private val responseHandler: Handler,
@@ -66,7 +66,7 @@ class ThumbnailDownloader<in T>(
     // the ThumbnailDownloader background thread
     private lateinit var requestHandler: Handler
     private val requestMap = ConcurrentHashMap<T, String>()   // This will store the identifier object and a URL for the download requests
-    private val flickrFetchr = FlickrFetchr()   // and this stores a reference to flickrFetctr instance
+    private val flickrFetchr = FlickrFetchr()
 
 
     override fun quit(): Boolean {
@@ -109,14 +109,32 @@ class ThumbnailDownloader<in T>(
         val url = requestMap[target] ?: return
         val bitmap = flickrFetchr.fetchPhoto(url) ?: return
 
-        responseHandler.post(Runnable {
-            if (requestMap[target] != url || hasQuit) {
-                return@Runnable
-            }
+        val retrievedBitmap = PhotoGalleryCache.instance.retrieveBitmapFromCache("bitmap1")
 
-            requestMap.remove(target)     // we remove the photoHolder-URL mapping from the requestMap and set the bitmap on the target PhotoHolder
-            onThumbnailDownloaded(target, bitmap)
-        })
+
+        // Course Challenge. This will check if the bitmap has already been downloaded and then use it, if not proceed to download a new one.
+        if (bitmap == retrievedBitmap) {
+
+            responseHandler.post(Runnable {
+                if (requestMap[target] != url || hasQuit) {
+                    return@Runnable
+                }
+
+                requestMap.remove(target)
+                onThumbnailDownloaded(target, retrievedBitmap)
+            })
+        } else {
+            val bitmapDownload = flickrFetchr.fetchPhoto(url) ?: return
+
+            responseHandler.post(Runnable {
+                if (requestMap[target] != url || hasQuit) {
+                    return@Runnable
+                }
+
+                requestMap.remove(target)     // we remove the photoHolder-URL mapping from the requestMap and set the bitmap on the target PhotoHolder
+                onThumbnailDownloaded(target, bitmapDownload)
+            })
+        }
 
         PhotoGalleryCache.instance.saveBitmapToCache("bitmap1", bitmap)
     }

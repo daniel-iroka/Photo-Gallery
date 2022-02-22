@@ -5,12 +5,12 @@ import android.util.Log
 import android.util.LruCache
 import java.lang.Exception
 
+// THIS IS OUR CACHE WHERE WE WILL STORE AND RETRIEVE OUR BITMAP
+
 private const val TAG = "PhotoGalleryCache"
 
 class PhotoGalleryCache private constructor() {
 
-    // TODO - WHEN I COME BACK NEXT TIME, REFACTOR THIS CODE, ADDING IT IN THUMBNAIL DOWNLOADER(OR MAYBE NOT) AND
-    // todo - PROPERLY TRY MY BEST TO IMPLEMENT LRUCACHE
     private object HOLDER {
         val INSTANCE = PhotoGalleryCache()
     }
@@ -19,11 +19,7 @@ class PhotoGalleryCache private constructor() {
         val instance: PhotoGalleryCache by lazy { HOLDER.INSTANCE }
     }
 
-    private val lru: LruCache<Any, Any>
-
-    init {
-        lru = LruCache(1500)
-    }
+    private val lru: LruCache<Any, Any> = LruCache(1500)
 
     // Saving our bitmap to our cache
     fun saveBitmapToCache(key: String, bitmap: Bitmap) {
