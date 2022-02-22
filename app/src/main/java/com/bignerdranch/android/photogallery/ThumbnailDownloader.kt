@@ -124,15 +124,13 @@ class ThumbnailDownloader<in T>(
                 onThumbnailDownloaded(target, retrievedBitmap)
             })
         } else {
-            val bitmapDownload = flickrFetchr.fetchPhoto(url) ?: return
-
             responseHandler.post(Runnable {
                 if (requestMap[target] != url || hasQuit) {
                     return@Runnable
                 }
 
                 requestMap.remove(target)     // we remove the photoHolder-URL mapping from the requestMap and set the bitmap on the target PhotoHolder
-                onThumbnailDownloaded(target, bitmapDownload)
+                onThumbnailDownloaded(target, bitmap)
             })
         }
 

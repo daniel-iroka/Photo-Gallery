@@ -5,7 +5,7 @@ import android.util.Log
 import android.util.LruCache
 import java.lang.Exception
 
-// THIS IS OUR CACHE WHERE WE WILL STORE AND RETRIEVE OUR BITMAP
+// COURSE CHALLENGE. THIS IS OUR CACHE WHERE WE WILL STORE AND RETRIEVE OUR BITMAP
 
 private const val TAG = "PhotoGalleryCache"
 
