@@ -53,11 +53,11 @@ class PhotoGalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Course Challenge. Observing the fragment's view lifeCycle with the viewLifeCycleOwnerLiveData
-        viewLifecycleOwnerLiveData.observe(
+        /**viewLifecycleOwnerLiveData.observe(
             viewLifecycleOwner, Observer { photoFragment ->
-                photoFragment.lifecycle.addObserver(thumbnailDownloader.viewLifeCycleObserver)
+                photoFragment.lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
             }
-        )
+        )**/
 
         val view = inflater.inflate(R.layout.fragment_photo_gallery, container, false)
 
@@ -125,8 +125,9 @@ class PhotoGalleryFragment : Fragment() {
     // This will remove thumbnailDownloader as a fragment's view lifecycle observer
     override fun onDestroyView() {
         super.onDestroyView()
-        viewLifecycleOwner.lifecycle.removeObserver(
-            thumbnailDownloader.viewLifeCycleObserver)
+        lifecycle.removeObserver(
+            thumbnailDownloader.fragmentLifeCycleObserver)
+        thumbnailDownloader.clearQueue() // Course Challenge. Have the fragment clear the queue
     }
 
     // This will remove thumbnailDownloader as a lifecycle observer when onDestroy is called.

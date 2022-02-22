@@ -31,22 +31,46 @@ class ThumbnailDownloader<in T>(
                 looper
             }
 
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun tearDown() {
                 Log.i(TAG, "Destroying background thread")
+                lifecycle?.removeObserver(observer)
                 quit()  // will terminate the thread
             }
+
         }
 
+
+    // Course Challenge(LifeCycleObserver)
+    private val observer = fragmentLifeCycleObserver
+    private val lifecycle: Lifecycle? = null
+
+
+    init {
+        lifecycle?.addObserver(observer)
+    }
+
+
+
+    // Course Challenge(LifeCycleObserver). Have thumbnailDownloader be automatically removed as lifecycleObserver when the fragment's lifecycle.ON_DESTROY is called.
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun clearQueue() {
+        Log.i(TAG, "Clearing all the requests from the Queue.")
+        requestHandler.removeMessages(MESSAGE_DOWNLOAD)
+        requestMap.clear()
+    }
+
     // A new observer that will listen to the lifecycle callbacks of the fragment's view
-    val viewLifeCycleObserver: LifecycleObserver =
+    /**val viewLifeCycleObserver: LifecycleObserver =
         object: LifecycleObserver {
 
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun clearQueue() {
                 Log.i(TAG, "Clearing all the requests from the Queue")
                 requestHandler.removeMessages(MESSAGE_DOWNLOAD)
                 requestMap.clear()
             }
-        }
+        } **/
 
     private var hasQuit = false
 
