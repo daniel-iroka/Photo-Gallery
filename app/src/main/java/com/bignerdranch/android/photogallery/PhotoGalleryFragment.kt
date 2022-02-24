@@ -5,9 +5,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -29,6 +27,8 @@ class PhotoGalleryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         retainInstance = true // Here we are forcefully retaining the fragment's instance because it is false by default due to re-creation in configuration change
 
         photoGalleryViewModel =     // An instance of our viewModel class
@@ -45,6 +45,13 @@ class PhotoGalleryFragment : Fragment() {
             }
 
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
+    }
+
+
+    // Inflating our menu or action item
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_photo_gallery, menu)
     }
 
     override fun onCreateView(
