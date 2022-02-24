@@ -1,13 +1,11 @@
 package com.bignerdranch.android.photogallery
 
 import  android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +15,8 @@ import com.squareup.picasso.Picasso
 
 private const val TAG = "PhotoGalleryFragment"
 private var column = 1
+
+// TODO - WHEN I COME BACK, I WILL START FROM THE CHAPTER 6 : SEARCH VIEW AND SHARED PREFERENCES.
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -48,7 +48,7 @@ class PhotoGalleryFragment : Fragment() {
     }
 
 
-    // Inflating our menu or action item
+    // Inflating our menu or action item(searchView)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_photo_gallery, menu)
