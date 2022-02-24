@@ -29,7 +29,7 @@ class PhotoGalleryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        retainInstance = true // In simple terms, this is like forcefully retaining the fragment's instance
+        retainInstance = true // Here we are forcefully retaining the fragment's instance because it is false by default due to re-creation in configuration change
 
         photoGalleryViewModel =     // An instance of our viewModel class
             ViewModelProvider(this).get(PhotoGalleryViewModel::class.java)
@@ -74,6 +74,7 @@ class PhotoGalleryFragment : Fragment() {
 
             val bindDrawable: (Drawable) -> Unit = itemImageView::setImageDrawable
 
+
             // Use of picasso to download an image for us. Picasso comes with benefits like enhanced performance, caching and the rest.
             fun bindGalleryItem(galleryItem : GalleryItem) {
                 Picasso.get()
@@ -98,11 +99,6 @@ class PhotoGalleryFragment : Fragment() {
 
         override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
             val galleryItem = galleryItems[position]
-            val placeHolder: Drawable = ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.bill_up_close
-            ) ?: ColorDrawable()
-            holder.bindDrawable(placeHolder)
 
             holder.bindGalleryItem(galleryItem)
 

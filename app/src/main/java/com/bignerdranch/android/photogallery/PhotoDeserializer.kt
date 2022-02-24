@@ -23,5 +23,4 @@ class PhotoDeserializer: JsonDeserializer<PhotoResponse> {
         return gson.fromJson(photoJsonObject, PhotoResponse::class.java)
     }
 
-
 }

@@ -9,8 +9,11 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bignerdranch.android.photogallery.api.FlickrApi
+import com.bignerdranch.android.photogallery.api.PhotoInterceptor
 import com.bignerdranch.android.photogallery.api.PhotoResponse
 import com.google.gson.GsonBuilder
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,25 +28,37 @@ class FlickrFetchr  {
     private val flickrApi : FlickrApi
     
     init {
+        // Adding our new Interceptor
+        val client = OkHttpClient.Builder()
+            .addInterceptor(PhotoInterceptor())
+            .build()
+
         val gsonPhotoDeserializer = GsonBuilder()  // Our Gson instance
             .registerTypeAdapter(PhotoResponse::class.java, PhotoDeserializer())
             .create()
         
         // custom converter factory
         val customGsonConverterFactory = GsonConverterFactory.create(gsonPhotoDeserializer)
-        
+
         val retrofit : Retrofit = Retrofit.Builder()
             .baseUrl("https://api.flickr.com/")  // the baseUrl is our request endpoint
             .addConverterFactory(customGsonConverterFactory)
+            .client(client)
             .build()
 
         flickrApi = retrofit.create(FlickrApi::class.java)
     }
 
-
     fun fetchPhotos(): LiveData<List<GalleryItem>> {
+        return fetchPhotoMetadata(flickrApi.fetchPhotos())
+    }
+
+    fun searchPhotos(query: String): LiveData<List<GalleryItem>> {
+        return fetchPhotoMetadata(flickrApi.searchPhotos(query))
+    }
+
+    private fun fetchPhotoMetadata(flickrRequest: Call<PhotoDeserializer>): LiveData<List<GalleryItem>> {
         val responseLiveData: MutableLiveData<List<GalleryItem>> = MutableLiveData()
-        val flickrRequest: Call<PhotoDeserializer> = flickrApi.fetchPhotos()
 
         flickrRequest.enqueue(object: Callback<PhotoDeserializer> {
             override fun onFailure(call: Call<PhotoDeserializer>, t: Throwable) {
