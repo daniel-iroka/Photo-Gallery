@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso
 private const val TAG = "PhotoGalleryFragment"
 private var column = 1
 
+// TODO - WHEN I COME BACK NEXT TIME, I WILL START REVISING FROM "Responding to SearchView user interactions" AND MOVE ON FROM THERE.
 
 class PhotoGalleryFragment : Fragment() {
 
