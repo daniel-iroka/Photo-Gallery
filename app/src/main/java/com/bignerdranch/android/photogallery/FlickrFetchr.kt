@@ -13,7 +13,6 @@ import com.bignerdranch.android.photogallery.api.PhotoInterceptor
 import com.bignerdranch.android.photogallery.api.PhotoResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

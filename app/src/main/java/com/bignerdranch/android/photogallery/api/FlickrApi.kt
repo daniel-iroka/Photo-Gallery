@@ -24,7 +24,7 @@ interface FlickrApi {
     fun fetchUrlBytes(@Url url: String): Call<ResponseBody>
 
     // This function will search photos on the flickr API
-    // ("text") will be appended to the URL as the request of the search
+    // ("text") will be appended to the URL as the request of the search due to the help of the Query annotation
     @GET("services/rest?method=flickr.photos.search")
     fun searchPhotos(@Query("text") query: String): Call<PhotoDeserializer>
 }

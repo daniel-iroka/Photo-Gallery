@@ -4,8 +4,10 @@ import  android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +18,6 @@ import com.squareup.picasso.Picasso
 private const val TAG = "PhotoGalleryFragment"
 private var column = 1
 
-// TODO - WHEN I COME BACK, I WILL START FROM THE CHAPTER 6 : SEARCH VIEW AND SHARED PREFERENCES.
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -52,6 +53,30 @@ class PhotoGalleryFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_photo_gallery, menu)
+
+        // getting reference to your menu_item
+        val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
+        val searchView = searchItem.actionView as SearchView   // pulling the SearchView 'object' from our menu_item which is a searchView
+
+        searchView.apply{
+
+            setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                // This is called or executed when the USER submits a query in the search
+                override fun onQueryTextSubmit(queryText: String): Boolean {
+                    Log.d(TAG, "QueryTextSubmit: $queryText")
+                    photoGalleryViewModel.fetchPhotos(queryText)
+                    // returning true indicates that the search request has been handled
+                    return true
+                }
+
+                // This is called when a text or character changes in the SearchView
+                override fun onQueryTextChange(queryText: String): Boolean {
+                    Log.d(TAG, "QueryTextChange: $queryText")
+                    // returning false indicates that the callback override did not handle the textChange
+                    return false
+                }
+            })
+        }
     }
 
     override fun onCreateView(
