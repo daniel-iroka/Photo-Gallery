@@ -18,7 +18,9 @@ import com.squareup.picasso.Picasso
 private const val TAG = "PhotoGalleryFragment"
 private var column = 1
 
-// TODO - WHEN I COME BACK NEXT TIME, I WILL START REVISING FROM "Responding to SearchView user interactions" AND MOVE ON FROM THERE.
+// TODO - "FIRSTLY", WHEN I COME BACK I WILL MAKE SURE TO RUN THE APP WHEN MY DEVICE IS TURNED ON BECAUSE I HAVE NOT TESTED IT WHEN I ADDED THIS CURRENT CODE.
+
+// TODO - WHEN I COME BACK, I WILL START REVISING FROM SHARED_PREFERENCES AND THE MOVE ON FROM THERE.
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -77,8 +79,26 @@ class PhotoGalleryFragment : Fragment() {
                     return false
                 }
             })
+
+            // This will populate the searchBox with the stored query(the USER's latest search) in the sharedPreferences when the user clicks on it and it expands
+            setOnSearchClickListener {
+                searchView.setQuery(photoGalleryViewModel.searchTerm, false)
+            }
         }
     }
+
+    // Initializing our menu_item to do work for us after it has been clicked. This is what will happen after our menu_item
+    // has been clicked, which is to clear the search
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.menu_item_clear -> {
+                photoGalleryViewModel.fetchPhotos("")
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
