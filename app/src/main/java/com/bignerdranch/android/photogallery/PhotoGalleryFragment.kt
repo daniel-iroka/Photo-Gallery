@@ -9,7 +9,6 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +18,7 @@ import com.squareup.picasso.Picasso
 
 private const val TAG = "PhotoGalleryFragment"
 
+// TODO - WHEN I COME BACK, AND WHEN I HAVE STRENGTH I WILL TRY TO IMPROVE THIS CHALLENGE AND THEN GO TO "WORK MANAGER."
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -151,9 +151,15 @@ class PhotoGalleryFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     photoRecyclerView.visibility = View.VISIBLE
                 }
+
+                if(progressBar.visibility == View.VISIBLE) {
+                    itemImageView.visibility = View.GONE
+                } else {
+                    itemImageView.visibility = View.VISIBLE
+                }
             }
         }
-
+    
     private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>)
         :RecyclerView.Adapter<PhotoHolder>() {
 
