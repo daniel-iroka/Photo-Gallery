@@ -18,9 +18,6 @@ import com.squareup.picasso.Picasso
 private const val TAG = "PhotoGalleryFragment"
 private var column = 1
 
-// TODO - "FIRSTLY", WHEN I COME BACK I WILL MAKE SURE TO RUN THE APP WHEN MY DEVICE IS TURNED ON BECAUSE I HAVE NOT TESTED IT WHEN I ADDED THIS CURRENT CODE.
-
-// TODO - WHEN I COME BACK, I WILL START REVISING FROM SHARED_PREFERENCES AND THE MOVE ON FROM THERE.
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -68,8 +65,11 @@ class PhotoGalleryFragment : Fragment() {
                 override fun onQueryTextSubmit(queryText: String): Boolean {
                     Log.d(TAG, "QueryTextSubmit: $queryText")
                     photoGalleryViewModel.fetchPhotos(queryText)
+
+                    searchView.onActionViewCollapsed()
+
                     // returning true indicates that the search request has been handled
-                    return true  // todo - Later, for the sake of curiosity, change this to false to see what will happen.
+                    return false
                 }
 
                 // This is called when a text or character changes in the SearchView

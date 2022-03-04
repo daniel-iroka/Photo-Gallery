@@ -2,6 +2,7 @@ package com.bignerdranch.android.photogallery
 
 import android.content.Context
 import android.preference.PreferenceManager
+import androidx.core.content.edit
 
 /**
  *  This is our sharedPreferences class where we will be storing OR persist our search term over something like the device restarting.
@@ -22,8 +23,8 @@ object QueryPreferences {
     // function to store the query in our sharedPreferences
     fun setStoredQuery(context: Context, query: String) {
         PreferenceManager.getDefaultSharedPreferences(context)
-            .edit()
-            .putString(PREF_SEARCH_QUERY, query)
-            .apply()
+            .edit {
+                putString(PREF_SEARCH_QUERY, query)
+            }
     }
 }

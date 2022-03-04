@@ -31,7 +31,7 @@ class PhotoGalleryViewModel(private val app: Application) : AndroidViewModel(app
         // What we added here will make the ImageResults of our GalleryItem to reflect the latest request or changes of our photoSearch
         galleryItemLiveData =
             Transformations.switchMap(mutableSearchTerm) { searchItem ->
-                // will still update the user with photos even though the search_item has been cleared
+                // this will still update the user with photos even though the search_item has been cleared
                 if (searchItem.isBlank()) {
                     flickrFetchr.fetchPhotos()
                 } else {
