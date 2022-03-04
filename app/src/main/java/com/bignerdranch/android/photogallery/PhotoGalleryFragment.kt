@@ -69,7 +69,7 @@ class PhotoGalleryFragment : Fragment() {
                     Log.d(TAG, "QueryTextSubmit: $queryText")
                     photoGalleryViewModel.fetchPhotos(queryText)
                     // returning true indicates that the search request has been handled
-                    return true
+                    return true  // todo - Later, for the sake of curiosity, change this to false to see what will happen.
                 }
 
                 // This is called when a text or character changes in the SearchView
