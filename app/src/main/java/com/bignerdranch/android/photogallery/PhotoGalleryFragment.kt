@@ -14,6 +14,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.squareup.picasso.Picasso
 
 private const val TAG = "PhotoGalleryFragment"
@@ -48,6 +52,23 @@ class PhotoGalleryFragment : Fragment() {
             }
 
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
+
+
+        // Constraints are like adding extra information to our Work request and in this constraint, we request that
+        // the work should only happen in an unmetered network(Network type) to avoid unnecessary data usages.
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        // This is our work request which will schedule our Worker to execute.
+        val workRequest = OneTimeWorkRequest
+            .Builder(PollWorker::class.java)   // Our worker request will build an instance of our 'Worker'(PollWorker) to be ready for execution.
+            .setConstraints(constraints)
+            .build()
+
+        // And here we pass in our work request to our Worker manager which will execute based on its request type.
+        WorkManager.getInstance()
+            .enqueue(workRequest)
     }
 
 
@@ -152,11 +173,6 @@ class PhotoGalleryFragment : Fragment() {
                     photoRecyclerView.visibility = View.VISIBLE
                 }
 
-                if(progressBar.visibility == View.VISIBLE) {
-                    itemImageView.visibility = View.GONE
-                } else {
-                    itemImageView.visibility = View.VISIBLE
-                }
             }
         }
     
