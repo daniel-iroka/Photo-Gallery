@@ -54,6 +54,8 @@ class PhotoGalleryFragment : Fragment() {
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
 
 
+        // TODO - WHEN I COME BACK, I WILL GO THROUGH STARTING FROM WORK MANAGER AND THEN CONTINUE TO HALF OF CHECKING NEW PHOTOS
+
         // Constraints are like adding extra information to our Work request and in this constraint, we request that
         // the work should only happen in an unmetered network(Network type) to avoid unnecessary data usages.
         val constraints = Constraints.Builder()
