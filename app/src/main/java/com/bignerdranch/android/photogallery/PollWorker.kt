@@ -16,11 +16,40 @@ class PollWorker(val context: Context, workerParams: WorkerParameters)
 
     // This is called from a background thread and does work in the background for us
     override fun doWork(): Result {
-        Log.i(TAG, "Work request triggered")
+        val query = QueryPreferences.getStoredQuery(context)
+        val lastResultId = QueryPreferences.getLastResultId(context)
+        val items: List<GalleryItem> = if (query.isEmpty()) {
+            FlickrFetchr().fetchPhotosRequest()  // if there is no search query(list of queries.isEmpty()), then fetch the regular interesting photos of the day.
+                .execute()
+                .body()
+                ?.photos
+                ?.galleryItems
+        } else {
+            FlickrFetchr().searchPhotosRequest(query)  // if there is a search query(list of queries.notEmpty()), fetch the photos, performing a search Request.
+                .execute()
+                .body()
+                ?.photos
+                ?.galleryItems
+        } ?: emptyList()
+
+
+        if (items.isEmpty()) {
+            return Result.success()
+        }
+
+        // compares the first returned item(photos) with the last seen item(photos)
+        val resultId = items.first().id
+        if (resultId == lastResultId) {
+            Log.i(TAG, "Got an old result: $resultId")
+        } else {
+            Log.i(TAG, "Got a new result: $resultId")
+            // if new id found, pass to lastResultId
+            QueryPreferences.setLastResultId(context, resultId)
+        }
+
         return Result.success()  // and this indicates the result of our operation
     }
 
-    // todo - Later check the meaning of abstract class again maybe from intelliJ
 
 
 }

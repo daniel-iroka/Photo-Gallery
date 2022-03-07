@@ -24,6 +24,8 @@ private const val TAG = "PhotoGalleryFragment"
 
 // TODO - WHEN I COME BACK, AND WHEN I HAVE STRENGTH I WILL TRY TO IMPROVE THIS CHALLENGE AND THEN GO TO "WORK MANAGER."
 
+// todo - Later check the meaning of abstract class again maybe from intelliJ
+
 class PhotoGalleryFragment : Fragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
@@ -54,7 +56,6 @@ class PhotoGalleryFragment : Fragment() {
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
 
 
-        // TODO - WHEN I COME BACK, I WILL GO THROUGH STARTING FROM WORK MANAGER AND THEN CONTINUE TO HALF OF CHECKING NEW PHOTOS
 
         // Constraints are like adding extra information to our Work request and in this constraint, we request that
         // the work should only happen in an unmetered network(Network type) to avoid unnecessary data usages.
