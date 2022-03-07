@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 /**
  *   This is our "Worker" class where we will do the work of checking flickr for new photos and notifying the USER.
  **/
+// TODO - WHEN I COME BACK, I WILL START REVISING FROM CHECKING NEW PHOTOS AND HALF OF NOTIFYING THE USER.
 
 private const val TAG = "PollWorker"
 
@@ -49,7 +50,6 @@ class PollWorker(val context: Context, workerParams: WorkerParameters)
 
         return Result.success()  // and this indicates the result of our operation
     }
-
 
 
 }
