@@ -30,7 +30,7 @@ object QueryPreferences {
     }
 
 
-    /** We are going to stash the IDs of the of the last photos in our sharedPreferences **/
+    /** We are going to stash the IDs of the of the last photos in our sharedPreferences .**/
 
     // function to get the ID of the last photo the USER saw from the sharedPreferences
     fun getLastResultId(context: Context): String {
@@ -38,7 +38,7 @@ object QueryPreferences {
             .getString(PREF_LAST_RESULT_ID, "") !!
     }
 
-    // function to get the ID of the last photo the USER saw from the sharedPreferences
+    // function to set the ID of the new photo that has been gotten from the photo request in PollWorker
     fun setLastResultId(context: Context, lastResultId: String) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putString(PREF_LAST_RESULT_ID, lastResultId)

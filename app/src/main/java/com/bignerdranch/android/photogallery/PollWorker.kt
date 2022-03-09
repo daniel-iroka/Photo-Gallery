@@ -1,14 +1,16 @@
 package com.bignerdranch.android.photogallery
 
+import android.app.PendingIntent
 import android.content.Context
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
 /**
  *   This is our "Worker" class where we will do the work of checking flickr for new photos and notifying the USER.
  **/
-// TODO - WHEN I COME BACK, I WILL START REVISING FROM CHECKING NEW PHOTOS AND HALF OF NOTIFYING THE USER.
 
 private const val TAG = "PollWorker"
 
@@ -46,10 +48,27 @@ class PollWorker(val context: Context, workerParams: WorkerParameters)
             Log.i(TAG, "Got a new result: $resultId")
             // if new id found, pass to lastResultId
             QueryPreferences.setLastResultId(context, resultId)
+
+            val intent = PhotoGalleryActivity.newIntent(context)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
+            val resources = context.resources
+            val notification = NotificationCompat
+                .Builder(context, NOTIFICATION_CHANNEL_ID)
+                .setTicker(resources.getString(R.string.new_pictures_title))  // the ticker will be sent to the accessibility systems in android to things like screen reader to help users with visually impairments
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle(resources.getString(R.string.new_pictures_title))
+                .setContentText(resources.getString(R.string.new_pictures_text))
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true) // will automatically delete the notification when the user presses it
+                .build()
+
+            val notificationManager = NotificationManagerCompat.from(context)
+            // we call this when we want to post a notification from a created notification object
+            notificationManager.notify(0, notification)
         }
 
         return Result.success()  // and this indicates the result of our operation
     }
-
 
 }
