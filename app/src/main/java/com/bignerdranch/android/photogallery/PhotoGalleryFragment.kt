@@ -14,13 +14,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
+import androidx.work.*
 import com.squareup.picasso.Picasso
+import java.util.concurrent.TimeUnit
 
 private const val TAG = "PhotoGalleryFragment"
+private const val POLL_WORK = "POLL_WORK"
 
 // TODO - WHEN I COME BACK, AND WHEN I HAVE STRENGTH I WILL TRY TO IMPROVE THIS CHALLENGE AND THEN GO TO "WORK MANAGER."
 
@@ -55,23 +54,6 @@ class PhotoGalleryFragment : Fragment() {
 
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
 
-
-
-        // Constraints are like adding extra information to our Work request and in this constraint, we request that
-        // the work should only happen in an unmetered network(Network type) to avoid unnecessary data usages.
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
-            .build()
-
-        // This is our work request which will schedule our Worker to execute.
-        val workRequest = OneTimeWorkRequest
-            .Builder(PollWorker::class.java)   // Our worker request will build an instance of our 'Worker'(PollWorker) to be ready for execution.
-            .setConstraints(constraints)
-            .build()
-
-        // And here we pass in our work request to our Worker manager which will execute based on its request type.
-        WorkManager.getInstance()
-            .enqueue(workRequest)
     }
 
 
@@ -98,7 +80,6 @@ class PhotoGalleryFragment : Fragment() {
                     searchView.onActionViewCollapsed()
 
                     progressBar.visibility = View.VISIBLE
-//                    photoRecyclerView.visibility = View.GONE
 
 
                     // returning true indicates that the search request has been handled
@@ -118,6 +99,18 @@ class PhotoGalleryFragment : Fragment() {
                 searchView.setQuery(photoGalleryViewModel.searchTerm, false)
             }
         }
+
+
+        // What we are doing here is that we are toggling the menu_item title based on the worker 'polling' state
+        // since its default title is "start_polling", it will stop polling if the polling state is true so that the user can have control
+        val toggleItem = menu.findItem(R.id.menu_item_toggle_polling)
+        val isPolling = QueryPreferences.isPolling(requireContext())
+        val toggleItemTitle = if (isPolling) {
+            R.string.stop_polling
+        } else {
+            R.string.start_polling
+        }
+        toggleItem.setTitle(toggleItemTitle)
     }
 
     // Initializing our menu_item to do work for us after it has been clicked. This is what will happen after our menu_item
@@ -128,6 +121,36 @@ class PhotoGalleryFragment : Fragment() {
                 photoGalleryViewModel.fetchPhotos("")
                 true
             }
+
+            // TODO - WHEN I COME BACK, I WILL START REVISING FROM NOTIFYING THE USER.
+
+            // this menu_item is for the toggling the worker class
+            R.id.menu_item_toggle_polling -> {
+                val isPolling = QueryPreferences.isPolling(requireContext())
+                if (isPolling) {
+                    WorkManager.getInstance().cancelUniqueWork(POLL_WORK)
+                    QueryPreferences.setPolling(requireContext(), false)
+
+                // this else block where we reschedule our worker to perform its work if its currently not running
+                } else {
+                    //Constraints are like adding extra information to our Work request and in this constraint, we request that
+                    // the work should only happen in an unmetered network(Network type) to avoid unnecessary data usages.
+                    val constraints = Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.UNMETERED)
+                        .build()
+                    val periodicRequest = PeriodicWorkRequest
+                        .Builder(PollWorker::class.java, 15, TimeUnit.MINUTES)
+                        .setConstraints(constraints)
+                        .build()
+                    WorkManager.getInstance().enqueueUniquePeriodicWork(POLL_WORK,
+                        ExistingPeriodicWorkPolicy.KEEP,
+                        periodicRequest)
+                    QueryPreferences.setPolling(requireContext(), true)
+                }
+                activity?.invalidateOptionsMenu()
+                return true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -11,6 +11,7 @@ import androidx.core.content.edit
 
 private const val PREF_SEARCH_QUERY = "searchQuery"
 private const val PREF_LAST_RESULT_ID = "lastResultId"
+private const val PREF_IS_POLLING = "isPolling"
 
 // This object is a singleton meaning it will only be instantiated once
 object QueryPreferences {
@@ -42,6 +43,19 @@ object QueryPreferences {
     fun setLastResultId(context: Context, lastResultId: String) {
         PreferenceManager.getDefaultSharedPreferences(context).edit {
             putString(PREF_LAST_RESULT_ID, lastResultId)
+        }
+    }
+
+    // function I think is to get the worker 'polling' state
+    fun isPolling(context: Context): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(PREF_IS_POLLING, false)
+    }
+
+    // function is to set the worker polling state
+    fun setPolling(context: Context, isOn: Boolean) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putBoolean(PREF_IS_POLLING, isOn)
         }
     }
 
