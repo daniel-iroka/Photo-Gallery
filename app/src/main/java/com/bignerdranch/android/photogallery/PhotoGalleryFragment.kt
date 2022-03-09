@@ -25,6 +25,8 @@ private const val POLL_WORK = "POLL_WORK"
 
 // todo - Later check the meaning of abstract class again maybe from intelliJ
 
+// TODO -  RUN THE App to better understand
+
 class PhotoGalleryFragment : Fragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
