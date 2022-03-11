@@ -9,7 +9,6 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -26,7 +25,7 @@ private const val POLL_WORK = "POLL_WORK"
 // todo - Later check the meaning of abstract class again maybe from intelliJ
 
 
-class PhotoGalleryFragment : Fragment() {
+class PhotoGalleryFragment : VisibleFragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
     private lateinit var photoRecyclerView: RecyclerView
