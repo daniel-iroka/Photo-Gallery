@@ -25,7 +25,6 @@ private const val POLL_WORK = "POLL_WORK"
 
 // todo - Later check the meaning of abstract class again maybe from intelliJ
 
-// TODO -  RUN THE App to better understand
 
 class PhotoGalleryFragment : Fragment() {
 
@@ -124,7 +123,6 @@ class PhotoGalleryFragment : Fragment() {
                 true
             }
 
-            // TODO - WHEN I COME BACK, I WILL START REVISING FROM NOTIFYING THE USER.
 
             // this menu_item is for the toggling the worker class
             R.id.menu_item_toggle_polling -> {

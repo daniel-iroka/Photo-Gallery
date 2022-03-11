@@ -6,7 +6,7 @@ import androidx.core.content.edit
 
 /**
  *  This is our sharedPreferences class where we will be storing OR persist our search term over something like the device restarting.
- *  SharedPreferences is a way we store data locally in our filesystem. Readable and writable data we can access anytime using the sharedPreferences class.
+ *  SharedPreferences is a way we store data locally in our filesystem, Readable and writable data we can access anytime using the sharedPreferences class.
  **/
 
 private const val PREF_SEARCH_QUERY = "searchQuery"
