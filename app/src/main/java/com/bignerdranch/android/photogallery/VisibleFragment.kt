@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
  *  This type of Broadcast receiver is called a dynamic Receiver.
  * **/
 
-// TODO - WHEN I COME BACK, I WILL START REVISING FROM BROADCAST INTENTS ARE UNDERSTAND IT BETTER
 
 private const val TAG = "VisibleFragment"
 
