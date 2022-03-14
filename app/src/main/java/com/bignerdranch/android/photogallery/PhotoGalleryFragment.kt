@@ -197,8 +197,13 @@ class PhotoGalleryFragment : VisibleFragment() {
             }
 
             override fun onClick(view: View) {
-                val intent = Intent(Intent.ACTION_VIEW, galleryItem.photoPageUri)
+                // This intent is for starting off a new activity displaying the web contents of a photo's page url when the photo is clicked by the user
+                val intent = PhotoPageActivity
+                    .newIntent(requireContext(), galleryItem.photoPageUri)
                 startActivity(intent)
+
+                // This intent is for the page's url
+                // val intent = Intent(Intent.ACTION_VIEW, galleryItem.photoPageUri)
             }
 
             // Use of picasso to download an image for us. Picasso comes with benefits like enhanced performance, caching and the rest.
