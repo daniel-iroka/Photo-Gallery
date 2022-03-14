@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
@@ -66,16 +65,13 @@ class PollWorker(val context: Context, workerParams: WorkerParameters)
                 .build()
 
             showBackgroundNotification(0, notification)
-
-            // sending a broadcast intent
-            context.sendBroadcast(Intent(ACTION_SHOW_NOTIFICATION), PERM_PRIVATE)
         }
 
         return Result.success()  // and this indicates the result of our operation
     }
 
     // This function is an ordered broadcast which will be sent to PollWorker in form of a notification invocation
-    // and it will be sent out as a broadcast
+    // and in turn will be sent out as as ordered broadcast instead of being posted to the NotificationManager directly
     private fun showBackgroundNotification(
         requestCode: Int,
         notification: Notification
@@ -84,6 +80,8 @@ class PollWorker(val context: Context, workerParams: WorkerParameters)
             putExtra(REQUEST_CODE, requestCode)
             putExtra(NOTIFICATION, notification)
         }
+
+        // sendOrderedBroadcast ensures that our broadcast is delivered to each receiver one at a time
         context.sendOrderedBroadcast(intent, PERM_PRIVATE)
     }
 

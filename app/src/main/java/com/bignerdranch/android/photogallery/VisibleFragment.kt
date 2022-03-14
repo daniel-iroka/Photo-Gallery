@@ -9,8 +9,8 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 
 /** This is our SECOND Broadcast receiver that will do the job of intercepting intents sent to the FIRST receiver disallowing it from posting Notifications when the app is running.
- *  This type of Broadcast receiver is called a dynamic Receiver.
- * **/
+ *  This type of Broadcast receiver is called a Dynamic Receiver.
+ **/
 
 
 private const val TAG = "VisibleFragment"
@@ -22,7 +22,7 @@ abstract class VisibleFragment : Fragment() {
             // If we receive this, we're visible, so cancel
             // the notification
             Log.i(TAG, "canceling notification")
-            resultCode = Activity.RESULT_CANCELED
+            resultCode = Activity.RESULT_CANCELED  // cancels the notification to be sent
         }
     }
 
@@ -30,7 +30,7 @@ abstract class VisibleFragment : Fragment() {
     // to the lifecycle of our Activity or Fragment.
     override fun onStart() {
         super.onStart()
-        val filter = IntentFilter(PollWorker.ACTION_SHOW_NOTIFICATION)
+        val filter = IntentFilter(PollWorker.ACTION_SHOW_NOTIFICATION)  // code format of an intent-filter
         requireActivity().registerReceiver(
             onShowNotification,
             filter,

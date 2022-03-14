@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 
 /** This is our FIRST Broadcast Receiver that will be added in our manifest and will do the work of posting notifications to the USER even the app's process is dead.
  *  This type of receiver is called a standalone receiver.
- * **/
+ **/
 
 private const val TAG = "NotificationReceiver"
 
@@ -25,6 +25,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val requestCode = intent.getIntExtra(PollWorker.REQUEST_CODE, 0)
         val notification: Notification = intent.getParcelableExtra(PollWorker.NOTIFICATION)!!
 
+        // will receive the notification broadcast from PollWorker and post it
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(requestCode, notification)
 

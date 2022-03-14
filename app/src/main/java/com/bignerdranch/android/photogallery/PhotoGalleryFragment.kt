@@ -1,5 +1,6 @@
 package com.bignerdranch.android.photogallery
 
+import android.content.Intent
 import  android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -180,13 +181,28 @@ class PhotoGalleryFragment : VisibleFragment() {
     // OUR PHOTO VIEW HOLDER AND ADAPTER
 
     private inner class PhotoHolder(private val itemImageView: ImageView)
-        : RecyclerView.ViewHolder(itemImageView) {
+        : RecyclerView.ViewHolder(itemImageView), View.OnClickListener {
+
+            private lateinit var galleryItem: GalleryItem
+
+            init {
+                // after implementing View.OnclickListener, will
+                itemView.setOnClickListener(this)
+            }
 
             val bindDrawable: (Drawable) -> Unit = itemImageView::setImageDrawable
 
+            fun bindGalleryItem(item: GalleryItem) {
+                galleryItem = item
+            }
+
+            override fun onClick(view: View) {
+                val intent = Intent(Intent.ACTION_VIEW, galleryItem.photoPageUri)
+                startActivity(intent)
+            }
 
             // Use of picasso to download an image for us. Picasso comes with benefits like enhanced performance, caching and the rest.
-            fun bindGalleryItem(galleryItem : GalleryItem) {
+            fun bindGalleryItems(galleryItem : GalleryItem) {
                 Picasso.get()
                     .load(galleryItem.url)
                     .placeholder(R.drawable.bill_up_close)
@@ -199,8 +215,9 @@ class PhotoGalleryFragment : VisibleFragment() {
                 }
 
             }
-        }
-    
+
+    }
+
     private inner class PhotoAdapter(private val galleryItems: List<GalleryItem>)
         :RecyclerView.Adapter<PhotoHolder>() {
 
@@ -218,6 +235,7 @@ class PhotoGalleryFragment : VisibleFragment() {
             val galleryItem = galleryItems[position]
 
             holder.bindGalleryItem(galleryItem)
+            holder.bindGalleryItems(galleryItem)
 
             thumbnailDownloader.queueThumbnail(holder, galleryItem.url)
         }
