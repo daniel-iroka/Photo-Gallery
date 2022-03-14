@@ -12,6 +12,7 @@ import android.webkit.WebViewClient
 private const val ARG_URI = "photo_page_url"
 
 // TODO - WHEN I COME BACK, I WILL START REVISING FROM "Browsing the Web and WebView" AND THEN GO TO "Using WebChromeClient to spruce things up".
+// TODO - WHEN I COME BACK, RUN AND TEST THIS APP BECAUSE OF BAD NETWORK
 
 class PhotoPageFragment : VisibleFragment() {
     private lateinit var uri : Uri
@@ -23,7 +24,7 @@ class PhotoPageFragment : VisibleFragment() {
         uri = arguments?.getParcelable(ARG_URI) ?: Uri.EMPTY
     }
 
-    @SuppressLint("setJavaScriptEnabled")
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
