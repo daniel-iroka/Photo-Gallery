@@ -186,7 +186,7 @@ class PhotoGalleryFragment : VisibleFragment() {
             private lateinit var galleryItem: GalleryItem
 
             init {
-                // after implementing View.OnclickListener, will
+                // after implementing View.OnclickListener, will listen to presses on an item
                 itemView.setOnClickListener(this)
             }
 
