@@ -26,6 +26,7 @@ abstract class VisibleFragment : Fragment() {
         }
     }
 
+
     // This function is to register our Broadcast receiver and it is ideal to add this here because this type of receiver is tied
     // to the lifecycle of our Activity or Fragment.
     override fun onStart() {

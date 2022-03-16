@@ -3,18 +3,17 @@ package com.bignerdranch.android.photogallery
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
 private const val ARG_URI = "photo_page_url"
-
-// TODO - WHEN I COME BACK, I WILL START REVISING FROM "Using WebChromeClient to spruce things up" AND BEYOND.
+private const val TAG = "PhotoPageFragment"
 
 class PhotoPageFragment : VisibleFragment() {
     private lateinit var uri : Uri
@@ -25,7 +24,9 @@ class PhotoPageFragment : VisibleFragment() {
         super.onCreate(savedInstanceState)
 
         uri = arguments?.getParcelable(ARG_URI) ?: Uri.EMPTY
+
     }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
@@ -40,6 +41,8 @@ class PhotoPageFragment : VisibleFragment() {
 
         webView = view.findViewById(R.id.web_view)
         webView.settings.javaScriptEnabled = true  // enabling javascript in our webView
+
+        // webViewClient is an interface that is used for responding to rendering events in a webView
         webView.webChromeClient = object: WebChromeClient() {
             // Progress will change based on the value of the progress callback(onProgressChanged)
             // this callback will receive changes on the progressBar when changed
@@ -58,12 +61,30 @@ class PhotoPageFragment : VisibleFragment() {
             }
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.d(TAG, "Fragment back pressed invoked.")
+                if (webView.canGoBack()) {
+                    webView.goBack()
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                }
+
+            }
+
+        }
+
+        )
+
 
         webView.webViewClient = WebViewClient()  // webViewClient is used for responding to rendering events on a webView
         webView.loadUrl(uri.toString())   /// loading the url in our webView
 
         return view
     }
+
+
 
     companion object {
         fun newInstance(uri: Uri?): PhotoPageFragment {

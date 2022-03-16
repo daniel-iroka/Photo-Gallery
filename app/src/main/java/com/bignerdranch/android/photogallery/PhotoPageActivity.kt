@@ -5,8 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
 class PhotoPageActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo_page)
@@ -20,8 +23,8 @@ class PhotoPageActivity : AppCompatActivity() {
                 .add(R.id.fragment_container, fragment)
                 .commit()
         }
-
     }
+
 
     companion object {
         fun newIntent(context: Context, photoPageUri: Uri): Intent {
