@@ -1,6 +1,5 @@
 package com.bignerdranch.android.photogallery
 
-import android.content.Intent
 import  android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -20,10 +19,6 @@ import java.util.concurrent.TimeUnit
 
 private const val TAG = "PhotoGalleryFragment"
 private const val POLL_WORK = "POLL_WORK"
-
-// TODO - WHEN I COME BACK, AND WHEN I HAVE STRENGTH I WILL TRY TO IMPROVE THIS CHALLENGE AND THEN GO TO "WORK MANAGER."
-
-// todo - Later check the meaning of abstract class again maybe from intelliJ
 
 
 class PhotoGalleryFragment : VisibleFragment() {
@@ -80,6 +75,7 @@ class PhotoGalleryFragment : VisibleFragment() {
                      **/
                     searchView.onActionViewCollapsed()
 
+                    photoRecyclerView.alpha = 0f
                     progressBar.visibility = View.VISIBLE
 
 
@@ -216,7 +212,7 @@ class PhotoGalleryFragment : VisibleFragment() {
                 // Course challenge
                 if (galleryItem.url.isNotEmpty()) {
                     progressBar.visibility = View.GONE
-                    photoRecyclerView.visibility = View.VISIBLE
+                    photoRecyclerView.alpha = 1f  // will toggle the visibility of the recylerView
                 }
 
             }
