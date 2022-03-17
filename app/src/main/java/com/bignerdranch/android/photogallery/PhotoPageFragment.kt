@@ -27,7 +27,6 @@ class PhotoPageFragment : VisibleFragment() {
 
     }
 
-
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater,
