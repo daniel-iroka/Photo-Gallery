@@ -71,11 +71,8 @@ class PhotoPageFragment : VisibleFragment() {
                 }
 
             }
-
         }
-
         )
-
 
         webView.webViewClient = WebViewClient()  // webViewClient is used for responding to rendering events on a webView
         webView.loadUrl(uri.toString())   /// loading the url in our webView
