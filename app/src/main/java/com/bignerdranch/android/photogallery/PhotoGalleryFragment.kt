@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit
 private const val TAG = "PhotoGalleryFragment"
 private const val POLL_WORK = "POLL_WORK"
 
-
 class PhotoGalleryFragment : VisibleFragment() {
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
@@ -47,9 +46,7 @@ class PhotoGalleryFragment : VisibleFragment() {
                 val drawable = BitmapDrawable(resources, bitmap)
                 photoHolder.bindDrawable(drawable)
             }
-
         lifecycle.addObserver(thumbnailDownloader.fragmentLifeCycleObserver)
-
     }
 
 
