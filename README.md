@@ -9,4 +9,6 @@ PhotoGallery is an App that lets Users display some of the most intresting photo
 This App is a client for the photo-sharing site Flickr. It will let Users fetch and display the most interesting public photos of the day according to Flickr.
 
 
-# Screenshots
+## Screenshots
+
+<img src="Screenshots/FirstPicture.png" width=400>
