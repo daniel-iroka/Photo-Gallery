@@ -11,4 +11,6 @@ This App is a client for the photo-sharing site Flickr. It will let Users fetch 
 
 ## Screenshots
 
-<img src="Screenshots/FirstPicture.png" width=400>
+## <img src="Screenshots/FirstPicture.png" width=400>
+
+![Screen 1](Screenshots/FirstPicture.png)
