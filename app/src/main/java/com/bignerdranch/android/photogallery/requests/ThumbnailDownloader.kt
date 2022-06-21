@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.requests
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -7,6 +7,8 @@ import android.os.HandlerThread
 import android.os.Message
 import android.util.Log
 import androidx.lifecycle.*
+import com.bignerdranch.android.photogallery.api.FlickrFetchr
+import com.bignerdranch.android.photogallery.storage.PhotoGalleryCache
 import java.util.concurrent.ConcurrentHashMap
 
 // THE SOLE PURPOSE OF THIS FILE IS TO DOWNLOAD AND SERVE IMAGES TO "PhotoGalleryFragment" in a background thread

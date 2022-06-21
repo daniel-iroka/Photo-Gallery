@@ -1,5 +1,6 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.requests
 
+import com.bignerdranch.android.photogallery.api.PhotoDeserializer
 import retrofit2.Call
 
 // This repository class handle canceling any photo request when our ViewModel is destroyed

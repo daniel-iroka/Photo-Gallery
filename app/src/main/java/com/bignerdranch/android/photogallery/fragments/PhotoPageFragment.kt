@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.fragments
 
 import android.annotation.SuppressLint
 import android.net.Uri
@@ -11,6 +11,7 @@ import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.bignerdranch.android.photogallery.R
 
 private const val ARG_URI = "photo_page_url"
 private const val TAG = "PhotoPageFragment"

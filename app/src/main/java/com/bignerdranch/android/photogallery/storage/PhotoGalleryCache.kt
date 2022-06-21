@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.storage
 
 import android.graphics.Bitmap
 import android.util.Log

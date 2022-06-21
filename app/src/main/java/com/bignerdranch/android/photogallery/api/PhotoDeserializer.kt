@@ -1,6 +1,6 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.api
 
-import com.bignerdranch.android.photogallery.api.PhotoResponse
+import com.bignerdranch.android.photogallery.model.PhotoResponse
 import com.google.gson.Gson
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer

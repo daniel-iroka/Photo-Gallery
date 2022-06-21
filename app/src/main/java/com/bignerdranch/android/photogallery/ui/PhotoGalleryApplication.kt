@@ -1,9 +1,10 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.ui
 
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import com.bignerdranch.android.photogallery.R
 
 const val NOTIFICATION_CHANNEL_ID = "flickr_poll"
 

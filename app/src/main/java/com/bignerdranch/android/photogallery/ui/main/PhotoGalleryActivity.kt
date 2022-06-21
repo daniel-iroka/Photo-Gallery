@@ -1,9 +1,11 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.ui.main
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bignerdranch.android.photogallery.R
+import com.bignerdranch.android.photogallery.fragments.PhotoGalleryFragment
 
 class PhotoGalleryActivity : AppCompatActivity() {
 

@@ -1,7 +1,11 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.bignerdranch.android.photogallery.api.FlickrFetchr
+import com.bignerdranch.android.photogallery.model.GalleryItem
+import com.bignerdranch.android.photogallery.requests.CancelRequestRepositoryClass
+import com.bignerdranch.android.photogallery.storage.QueryPreferences
 
 /**
  *  This is our ViewModel class where we will preserve the over request of our photos over configuration change.

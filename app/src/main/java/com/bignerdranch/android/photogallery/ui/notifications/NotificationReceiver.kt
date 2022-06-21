@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.ui.notifications
 
 import android.app.Activity
 import android.app.Notification

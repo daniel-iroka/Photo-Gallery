@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PhotoGallery">
         <activity
-            android:name=".PhotoGalleryActivity"
+            android:name=".ui.main.PhotoGalleryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PhotoPageActivity"
+        <activity android:name=".ui.PhotoPageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <!-- This is a standalone receiver. -->

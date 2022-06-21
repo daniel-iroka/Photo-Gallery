@@ -1,6 +1,5 @@
 package com.bignerdranch.android.photogallery.api
 
-import com.bignerdranch.android.photogallery.PhotoDeserializer
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET

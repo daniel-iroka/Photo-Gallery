@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.api
 
 // This is our Repository file which we will use to store and access data(photos)
 
@@ -9,8 +9,10 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bignerdranch.android.photogallery.api.FlickrApi
+import com.bignerdranch.android.photogallery.api.PhotoDeserializer
 import com.bignerdranch.android.photogallery.api.PhotoInterceptor
-import com.bignerdranch.android.photogallery.api.PhotoResponse
+import com.bignerdranch.android.photogallery.model.PhotoResponse
+import com.bignerdranch.android.photogallery.model.GalleryItem
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody

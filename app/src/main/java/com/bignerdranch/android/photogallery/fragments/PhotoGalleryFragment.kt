@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.fragments
 
 import  android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -14,6 +14,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
+import com.bignerdranch.android.photogallery.*
+import com.bignerdranch.android.photogallery.R
+import com.bignerdranch.android.photogallery.model.GalleryItem
+import com.bignerdranch.android.photogallery.requests.ThumbnailDownloader
+import com.bignerdranch.android.photogallery.storage.QueryPreferences
+import com.bignerdranch.android.photogallery.ui.PhotoPageActivity
+import com.bignerdranch.android.photogallery.ui.notifications.PollWorker
+import com.bignerdranch.android.photogallery.viewmodel.PhotoGalleryViewModel
 import com.squareup.picasso.Picasso
 import java.util.concurrent.TimeUnit
 
@@ -26,6 +34,7 @@ class PhotoGalleryFragment : VisibleFragment() {
     private lateinit var photoRecyclerView: RecyclerView
     private lateinit var thumbnailDownloader: ThumbnailDownloader<PhotoHolder>  // Our ThumbnailDownloader() Instance
     private lateinit var progressBar: ProgressBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +65,10 @@ class PhotoGalleryFragment : VisibleFragment() {
         inflater.inflate(R.menu.fragment_photo_gallery, menu)
 
         // getting reference to your menu_item
-        val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
+        val searchItem :MenuItem = menu.findItem(R.id.menu_item_search)
         val searchView = searchItem.actionView as SearchView   // pulling the SearchView 'object' from our menu_item which is a searchView
-
+        searchView.isSubmitButtonEnabled = true
+        
         searchView.apply{
 
             setOnQueryTextListener(object: SearchView.OnQueryTextListener{
@@ -270,4 +280,5 @@ class PhotoGalleryFragment : VisibleFragment() {
     companion object {
         fun newInstance() = PhotoGalleryFragment()
     }
+
 }

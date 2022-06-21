@@ -1,4 +1,4 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.fragments
 
 import android.app.Activity
 import android.content.BroadcastReceiver
@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.bignerdranch.android.photogallery.ui.notifications.PollWorker
 
 /** This is our SECOND Broadcast receiver that will do the job of intercepting intents sent to the FIRST receiver disallowing it from posting Notifications when the app is running.
  *  This type of Broadcast receiver is called a Dynamic Receiver.

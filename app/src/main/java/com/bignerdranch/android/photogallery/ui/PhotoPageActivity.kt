@@ -1,12 +1,12 @@
-package com.bignerdranch.android.photogallery
+package com.bignerdranch.android.photogallery.ui
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import com.bignerdranch.android.photogallery.R
+import com.bignerdranch.android.photogallery.fragments.PhotoPageFragment
 
 class PhotoPageActivity : AppCompatActivity() {
 
