@@ -213,7 +213,7 @@ class PhotoGalleryFragment : VisibleFragment() {
             fun bindGalleryItems(galleryItem : GalleryItem) {
                 Picasso.get()
                     .load(galleryItem.url)
-                    .placeholder(R.drawable.bill_up_close)
+                    .placeholder(R.drawable.photo_icon_17)
                     .into(itemImageView)
 
                 // Course challenge
